@@ -1,314 +1,94 @@
-# VoidUI
+# VoidUI — Modern UI Library for Lua/LuaU
 
 <div align="center">
 
-![VoidUI Logo](assets/logo.png)
+**Version 1.0.0** | MIT License | By NinjaTech AI Team
 
-**The most modern, elegant, and complete UI library for Lua/LuaU**
-
-[![Version](https://img.shields.io/badge/version-1.0.0-7850ff)]()
-[![License](https://img.shields.io/badge/license-MIT-28c840)]()
-[![LuaU](https://img.shields.io/badge/LuaU-compatible-64c8ff)]()
-[![Components](https://img.shields.io/badge/components-50%2B-7850ff)]()
-[![Themes](https://img.shields.io/badge/themes-6-7850ff)]()
-[![Languages](https://img.shields.io/badge/i18n-3-64c8ff)]()
+A complete, modular, and elegant UI library inspired by modern design principles.
+Built for performance, extensibility, and beauty.
 
 </div>
 
 ---
 
-## Overview
+## What is VoidUI?
 
-VoidUI is a modern, elegant, and complete UI library for Lua/LuaU, designed for building premium user interfaces in the Roblox environment. Built entirely from scratch with an original architecture, visual identity, and API, VoidUI provides 50+ components, 6 built-in themes, 3 language packs, a full plugin system, and comprehensive documentation.
+VoidUI is a comprehensive user interface library for the Lua/LuaU scripting environment, designed to be one of the most modern, elegant, and complete UI libraries available. It provides over fifty reusable components, a powerful theming system, a fluid animation engine, an internationalization layer, a plugin architecture, and a full event-driven callback system — all wrapped in a clean, intuitive API that prioritizes developer experience without sacrificing flexibility or performance.
 
-## Features
+The library was conceived with a singular vision: to bring the polish and sophistication of modern web and desktop UI frameworks into the Lua scripting world. Every component has been carefully designed with soft borders, rounded corners, subtle shadows, blur effects, micro-animations, and a restrained color palette that together create an interface that feels premium and refined rather than utilitarian. The visual identity is entirely original, drawing inspiration from contemporary design trends without copying any existing library.
 
-- **50+ Components** — Window, Tab, Section, Button, Toggle, Slider, Dropdown, ColorPicker, Keybind, DataTable, TreeView, Accordion, Command Palette, Terminal, and many more
-- **6 Built-in Themes** — Dark, Light, Midnight, Sunset, Forest, and Cyber, plus full custom theme support
-- **3 Languages** — English (en-US), Portuguese (pt-BR), and Spanish (es-ES) with full i18n system
-- **Modern Animations** — Ripple effects, glow effects, hover/press animations, smooth tweens, and object pooling
-- **Plugin System** — Register custom components, themes, and lifecycle hooks
-- **Developer Tools** — Command Palette, Terminal, Console, and LogViewer
-- **Event System** — Signal-based events, Promises, keybind system, and auto-disconnect
-- **State Persistence** — Save and restore UI configuration with StateManager
-- **Comprehensive Documentation** — 16 documentation files covering everything from installation to troubleshooting
+## Key Features
 
-## Installation
+VoidUI ships with an extensive set of capabilities that cover virtually every UI need. The core library includes a signal-based event system for clean callback management, a Promise implementation for asynchronous workflows, an object-oriented base class pattern for consistent component architecture, and a comprehensive set of utility functions for common operations like JSON encoding, color manipulation, number formatting, and deep cloning.
 
-### Method 1: Loadstring (Recommended)
+The theming system provides six built-in themes (Dark, Light, Midnight, Sunset, Forest, and Cyber) with full support for custom theme creation, export, import, and runtime switching. Every component automatically responds to theme changes, and the accent color can be customized independently. The animation system offers tween helpers, ripple effects with object pooling, glow effects, hover and press states, pulse animations, shake effects, spinners, bounce, and sweep — all configurable through a global animation quality and speed setting.
 
-```lua
-local VoidUI = loadstring(game:HttpGet(
-    "https://voidui.dev/latest.lua"
-))()
-```
+The internationalization system supports English (en-US), Portuguese (pt-BR), and Spanish (es-ES) out of the box, with the ability to add additional languages at runtime. The plugin and extension system allows third-party developers to register custom components, themes, commands, and lifecycle hooks. State persistence is handled through a StateManager that saves and loads configuration via JSON file I/O. A command palette, developer console, terminal emulator, and log viewer round out the developer tooling.
 
-### Method 2: Local Script
+## Component Catalog
 
-Download the source code and load it from a local file:
+VoidUI includes over fifty components organized into logical categories. The core structural components include Window, Tab, SubTab, Section, and GroupBox for organizing your interface hierarchy. Input components include Button, Toggle, Checkbox, Slider, Dropdown, MultiDropdown, ColorPicker, Keybind, Textbox, Input, PasswordInput, SearchBox, and CodeEditor for collecting user input. Feedback components include Notification, Dialog, Modal, Tooltip, Badge, ProgressBar, and LoadingScreen for communicating state and progress.
 
-```lua
-local VoidUI = loadstring(readfile("VoidUI/VoidUI.lua"))()
-```
-
-### Method 3: Roblox Model
-
-Import the VoidUI model from the toolbox and require it:
-
-```lua
-local VoidUI = require(script.Parent.VoidUI)
-```
+Display components include SplashScreen, WelcomeScreen, Card, Avatar, Image, VideoPreview, Divider, and Spacer for presenting content. Complex data components include Accordion, TreeView, List, DataTable, StatusIndicator, Chip, Tag, Breadcrumb, and Pagination for organizing and navigating structured information. Navigation components include FloatingButton, Sidebar, Navbar, ContextMenu, and RightClickMenu for application navigation patterns. Window management components include WindowManager, DockingSystem, and TabsReorder for managing multiple windows and their layout. Developer tooling components include Toasts, CommandPalette, Terminal, Console, and LogViewer for building developer-facing interfaces.
 
 ## Quick Start
 
+Getting started with VoidUI takes just a few lines of code. The library is loaded via a single function call, after which you can create a window, add tabs and sections, and populate them with any of the available components.
+
 ```lua
-local VoidUI = loadstring(game:HttpGet(
-    "https://voidui.dev/latest.lua"
-))()
+local VoidUI = loadstring(game:HttpGet(URL))()
 
 local Window = VoidUI:CreateWindow({
     Title = "My Application",
-    Theme = "Dark",
-    Size = Vector2.new(580, 460),
+    Subtitle = "Powered by VoidUI",
 })
 
-local Tab = Window:AddTab({ Title = "Home" })
-local Section = Tab:AddSection({ Title = "Settings" })
+local Tab = Window:CreateTab("Home", "rbxassetid://iconId")
 
-Section:AddButton({
-    Text = "Click Me!",
-    Style = "Primary",
-    OnClick = function()
-        VoidUI:NotifySuccess({ Title = "Hello!", Description = "Button was clicked!" })
+local Section = Tab:CreateSection("Settings")
+
+Section:CreateButton({
+    Text = "Click Me",
+    Callback = function()
+        print("Hello from VoidUI!")
     end,
 })
 
-Section:AddToggle({
+Section:CreateToggle({
     Text = "Enable Feature",
-    Default = true,
-    OnChanged = function(value)
-        print("Feature enabled:", value)
-    end,
-})
-
-Section:AddSlider({
-    Text = "Volume",
-    Min = 0, Max = 100, Default = 50, Suffix = "%",
-    OnChanged = function(value)
-        print("Volume:", value)
+    Default = false,
+    Callback = function(value)
+        print("Feature is now:", value)
     end,
 })
 ```
 
-## Project Structure
+## Architecture Overview
 
-```
-VoidUI/
-├── assets/                 # Visual identity assets
-│   └── logo.png            # VoidUI logo
-├── docs/                   # Documentation (16 files)
-│   ├── README.md           # Documentation index
-│   ├── 01-installation.md
-│   ├── 02-getting-started.md
-│   ├── 03-api-reference.md
-│   ├── 04-components.md
-│   ├── 05-themes.md
-│   ├── 06-events-and-callbacks.md
-│   ├── 07-i18n.md
-│   ├── 08-plugins.md
-│   ├── 09-examples.md
-│   ├── 10-faq.md
-│   ├── 11-changelog.md
-│   ├── 12-migration-guide.md
-│   ├── 13-best-practices.md
-│   ├── 14-troubleshooting.md
-│   └── 15-license-and-credits.md
-├── examples/               # Example scripts
-│   ├── README.md
-│   ├── complete_example.lua
-│   ├── settings_panel.lua
-│   ├── custom_theme.lua
-│   ├── plugin_example.lua
-│   ├── loading_screen.lua
-│   ├── notifications_and_dialogs.lua
-│   └── data_components.lua
-├── src/                    # Source code (65 Lua files)
-│   ├── VoidUI.lua          # Main loader with global API
-│   ├── core/               # Core modules
-│   │   └── VoidCore.lua    # Signal, Promise, Object, Utils, StateManager
-│   ├── theme/              # Theme system
-│   │   └── ThemeSystem.lua
-│   ├── animation/          # Animation system
-│   │   └── AnimationSystem.lua
-│   ├── events/             # Event system
-│   │   └── EventSystem.lua
-│   ├── utils/              # Utilities
-│   │   └── i18n.lua        # Internationalization
-│   ├── plugins/            # Plugin system
-│   │   └── PluginSystem.lua
-│   └── components/         # All 50+ components
-│       ├── Component.lua   # Base component class
-│       ├── Window.lua
-│       ├── Tab.lua
-│       ├── Section.lua
-│       ├── SubTab.lua
-│       ├── GroupBox.lua
-│       ├── Button.lua
-│       ├── Toggle.lua
-│       ├── Checkbox.lua
-│       ├── Slider.lua
-│       ├── Dropdown.lua
-│       ├── MultiDropdown.lua
-│       ├── ColorPicker.lua
-│       ├── Keybind.lua
-│       ├── Textbox.lua
-│       ├── Input.lua
-│       ├── PasswordInput.lua
-│       ├── SearchBox.lua
-│       ├── CodeEditor.lua
-│       ├── Notification.lua
-│       ├── Dialog.lua
-│       ├── Modal.lua
-│       ├── Tooltip.lua
-│       ├── LoadingScreen.lua
-│       ├── SplashScreen.lua
-│       ├── WelcomeScreen.lua
-│       ├── Badge.lua
-│       ├── ProgressBar.lua
-│       ├── Card.lua
-│       ├── Avatar.lua
-│       ├── Image.lua
-│       ├── VideoPreview.lua
-│       ├── Label.lua
-│       ├── Paragraph.lua
-│       ├── Divider.lua
-│       ├── Spacer.lua
-│       ├── Accordion.lua
-│       ├── TreeView.lua
-│       ├── List.lua
-│       ├── DataTable.lua
-│       ├── StatusIndicator.lua
-│       ├── Chip.lua
-│       ├── Tag.lua
-│       ├── Breadcrumb.lua
-│       ├── Pagination.lua
-│       ├── FloatingButton.lua
-│       ├── Sidebar.lua
-│       ├── Navbar.lua
-│       ├── ContextMenu.lua
-│       ├── RightClickMenu.lua
-│       ├── TabsReorder.lua
-│       ├── WindowManager.lua
-│       ├── DockingSystem.lua
-│       ├── Toasts.lua
-│       ├── CommandPalette.lua
-│       ├── Terminal.lua
-│       ├── Console.lua
-│       └── LogViewer.lua
-├── website/                # Official website
-│   ├── index.html          # Landing page
-│   ├── docs.html           # Documentation page
-│   ├── showcase.html       # Showcase page
-│   ├── playground.html     # Interactive playground
-│   ├── changelog.html      # Changelog page
-│   ├── faq.html            # FAQ page
-│   └── assets/
-│       └── style.css       # Website styling
-├── todo.md                 # Development plan
-└── README.md               # This file
-```
+VoidUI is built on a modular architecture where each concern is handled by a dedicated module. The core utilities module (VoidCore) provides the foundational building blocks: the Signal class for event-driven communication, the Promise class for asynchronous operations, the Object base class for object-oriented patterns, and a comprehensive Utils table with helper functions. The theme system, animation system, event system, and i18n system each live in their own modules, while every component is implemented as a separate file that extends the base Component class.
 
-## Documentation
+All components follow a consistent pattern: they are created through a factory function, they implement a `_createUI` method that builds their visual representation using Roblox Instance objects, they implement an `_applyThemeImpl` method that applies the current theme, and they expose setter methods for runtime configuration. Components emit signals that can be connected to using the `:Connect` method, and they automatically clean up their resources when destroyed.
 
-Full documentation is available in the [docs/](docs/) directory or on the [official website](https://voidui.pages.dev).
+## Documentation Index
 
-Key documentation:
-- [Installation Guide](docs/01-installation.md)
-- [Getting Started](docs/02-getting-started.md)
-- [API Reference](docs/03-api-reference.md)
-- [Components Reference](docs/04-components.md)
-- [Themes](docs/05-themes.md)
-- [Events & Callbacks](docs/06-events-and-callbacks.md)
-- [Plugins](docs/08-plugins.md)
-- [Examples](docs/09-examples.md)
-- [FAQ](docs/10-faq.md)
-- [Best Practices](docs/13-best-practices.md)
-- [Troubleshooting](docs/14-troubleshooting.md)
+The full documentation is organized into the following sections, each covering a specific aspect of the library:
 
-## Examples
-
-See the [examples/](examples/) directory for complete working examples:
-
-- **Complete Example** — All components in one application
-- **Settings Panel** — Toggles, sliders, dropdowns, config
-- **Custom Theme** — Creating and applying custom themes
-- **Plugin Example** — Custom components and themes via plugin system
-- **Loading Screen** — Loading, splash, and welcome screens
-- **Notifications & Dialogs** — All notification types and dialogs
-- **Data Components** — DataTable, List, TreeView, Accordion
-
-## Themes
-
-VoidUI includes 6 built-in themes:
-
-| Theme | Description |
-|-------|-------------|
-| Dark | Default theme with deep dark backgrounds and purple accent |
-| Light | Clean light theme with soft shadows |
-| Midnight | Ultra-dark theme with blue undertones |
-| Sunset | Warm theme with orange and pink accents |
-| Forest | Nature-inspired with green accents |
-| Cyber | Neon cyberpunk with vibrant colors |
-
-```lua
--- Switch themes
-VoidUI:SetTheme("Light")
-
--- Create custom theme
-VoidUI:CreateTheme("MyTheme", {
-    Background = Color3.fromRGB(18, 18, 28),
-    Surface = Color3.fromRGB(24, 24, 38),
-    -- ... full color palette
-})
-VoidUI:SetTheme("MyTheme")
-
--- Set just the accent color
-VoidUI:SetAccent(Color3.fromRGB(0, 200, 255))
-```
+1. **Installation** — How to install and load VoidUI in your project
+2. **Getting Started** — A guided walkthrough of creating your first VoidUI interface
+3. **API Reference** — Complete reference for the global VoidUI API
+4. **Components** — Detailed documentation for every component
+5. **Themes** — How to use, create, and customize themes
+6. **Events & Callbacks** — The signal system, promises, and event patterns
+7. **Internationalization** — Multi-language support and adding translations
+8. **Plugins & Extensions** — Extending VoidUI with custom components and hooks
+9. **Examples** — A collection of practical examples and use cases
+10. **FAQ** — Frequently asked questions
+11. **Changelog** — Version history and changes
+12. **Migration Guide** — Upgrading from other libraries to VoidUI
+13. **Best Practices** — Recommended patterns and conventions
+14. **Troubleshooting** — Common issues and solutions
+15. **License & Credits** — Licensing information and acknowledgments
 
 ## License
 
-VoidUI is released under the [MIT License](docs/15-license-and-credits.md).
-
-```
-MIT License
-
-Copyright (c) 2026 NinjaTech AI Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files...
-```
-
-## Credits
-
-- **Developer:** NinjaTech AI Team
-- **Inspiration:** WindUI (organizational concepts), modern web/desktop UI design
-- **Technologies:** Lua, LuaU, Roblox services
-
-## Links
-
-- [Website](https://voidui.pages.dev)
-- [Documentation](docs/)
-- [Examples](examples/)
-- [Changelog](docs/11-changelog.md)
-- [FAQ](docs/10-faq.md)
-
----
-
-<div align="center">
-
-**VoidUI** — Built with passion for the Lua community.
-
-© 2026 NinjaTech AI Team. MIT License.
-
-</div>
+VoidUI is released under the MIT License. See the [License & Credits](./15-license-and-credits.md) document for full details.
