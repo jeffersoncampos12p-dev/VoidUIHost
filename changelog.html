@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog — VoidUI</title>
+    <meta name="description" content="VoidUI changelog — all versions, features, improvements, and bug fixes.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237850ff'/><text x='50' y='72' font-size='62' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>V</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .changelog-container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+        .changelog-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .changelog-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .changelog-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        .version-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: border-color 0.3s;
+        }
+        .version-card:hover {
+            border-color: rgba(120, 80, 255, 0.3);
+        }
+        .version-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .version-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .version-badge {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .version-badge.latest {
+            background: rgba(120, 80, 255, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(120, 80, 255, 0.3);
+        }
+        .version-badge.stable {
+            background: rgba(40, 200, 64, 0.15);
+            color: #28c840;
+            border: 1px solid rgba(40, 200, 64, 0.3);
+        }
+        .version-date {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .changelog-section {
+            margin-bottom: 24px;
+        }
+        .changelog-section h3 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .changelog-section h3.added { color: #28c840; }
+        .changelog-section h3.changed { color: #febc2e; }
+        .changelog-section h3.fixed { color: #64c8ff; }
+        .changelog-section h3.removed { color: #ff5f57; }
+        .changelog-section h3.security { color: #ff5f57; }
+        .changelog-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .changelog-list li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        .changelog-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.5;
+        }
+        .changelog-list li.added::before { background: #28c840; }
+        .changelog-list li.changed::before { background: #febc2e; }
+        .changelog-list li.fixed::before { background: #64c8ff; }
+        .changelog-list li.removed::before { background: #ff5f57; }
+        .changelog-list code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(120, 80, 255, 0.1);
+            color: var(--accent);
+        }
+        .changelog-timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+        .changelog-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+            border-radius: 1px;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-mark">V</span>
+                <span class="logo-text">VoidUI</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="docs.html">Documentation</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="changelog.html" class="active">Changelog</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <a href="#" class="btn btn-outline nav-cta">GitHub</a>
+            </ul>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <div class="changelog-container">
+        <div class="changelog-header">
+            <h1>Changelog</h1>
+            <p>All versions of VoidUI — features, improvements, and bug fixes</p>
+        </div>
+
+        <div class="changelog-timeline">
+            <!-- Version 1.0.0 -->
+            <div class="version-card">
+                <div class="version-header">
+                    <div class="version-number">
+                        v1.0.0
+                        <span class="version-badge latest">Latest</span>
+                        <span class="version-badge stable">Stable</span>
+                    </div>
+                    <div class="version-date">2026-01-15</div>
+                </div>
+                <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:24px;">Initial release of VoidUI — the most modern, elegant, and complete UI library for Lua/LuaU. Built from the ground up with an original architecture, visual identity, and 50+ components.</p>
+
+                <div class="changelog-section">
+                    <h3 class="added">✦ Added — Core Library</h3>
+                    <ul class="changelog-list">
+                        <li class="added"><code>VoidCore</code> module with Signal class, Promise implementation, Object base class, Utilities, Color utilities, and StateManager</li>
+                        <li class="added"><code>ThemeSystem</code> with 6 built-in themes: Dark, Light, Midnight, Sunset, Forest, and Cyber</li>
+                        <li class="added"><code>AnimationSystem</code> with tween helpers, ripple effect (object pooling), glow effect, hover/press/pulse/shake/spinner/bounce/sweep animations</li>
+                        <li class="added"><code>EventSystem</code> with global signal, keybind system, and event dispatcher</li>
+                        <li class="added"><code>i18n</code> system supporting Portuguese (pt-BR), English (en-US), and Spanish (es-ES)</li>
+                        <li class="added"><code>PluginSystem</code> with component registration, theme registration, lifecycle hooks, and full plugin utilities</li>
+                        <li class="added"><code>StateManager</code> for config persistence and state save/load</li>
+                        <li class="added">Main loader <code>VoidUI.lua</code> with complete global API</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Structural Components</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Window with dragging, tab management, state persistence, minimize/maximize, and 40+ configuration options</li>
+                        <li class="added">Tab with icon, content area as ScrollingFrame, SetActive/Deactivate</li>
+                        <li class="added">SubTab for secondary navigation within Tabs</li>
+                        <li class="added">Section with Collapsible/Collapsed/Side options and factory methods for all components</li>
+                        <li class="added">GroupBox container with title, description, and border</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Input Components</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Button with 5 styles (Primary, Secondary, Ghost, Danger, Success), icon, hover, ripple, press, and gradient</li>
+                        <li class="added">Toggle — iOS-style switch with label, description, smooth animations, OnChanged</li>
+                        <li class="added">Checkbox — square box with checkmark and smooth animations</li>
+                        <li class="added">Slider with Min/Max/Step, suffix/prefix, format, track, filled, gradient, knob, and drag</li>
+                        <li class="added">Dropdown with options list, searchable, icons, expand/collapse, outside click</li>
+                        <li class="added">MultiDropdown with multi-select checkboxes and clear all</li>
+                        <li class="added">ColorPicker with HSV color wheel, saturation/value area, hue slider, hex input</li>
+                        <li class="added">Keybind with live key capture, key formatting, trigger modes, OnTriggered/OnChanged</li>
+                        <li class="added">Textbox with label, placeholder, multiline, max length, numeric, focus/blur</li>
+                        <li class="added">Input — no label variant with icon support</li>
+                        <li class="added">PasswordInput with mask/unmask toggle (eye icon)</li>
+                        <li class="added">SearchBox with search icon, clear button, debounce, OnSearch/OnChanged</li>
+                        <li class="added">CodeEditor with monospace font, line numbers, and copy button</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Feedback Components</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Notification — toast-style with 4 variants, auto-dismiss, close button, OnDismiss</li>
+                        <li class="added">Dialog — pre-built modal with title, message, configurable buttons, 4 variants</li>
+                        <li class="added">Modal with dimmed backdrop, custom content, backdrop close, OnOpen/OnClose</li>
+                        <li class="added">Tooltip with 4 positions, delay, SetTarget/SetText/SetEnabled</li>
+                        <li class="added">LoadingScreen — full-screen overlay with spinner, progress, brand logo</li>
+                        <li class="added">Badge with 5 variants (Default, Success, Warning, Error, Info), icon, pill</li>
+                        <li class="added">ProgressBar with Min/Max, label, value display, gradient fill animation, OnComplete</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Display Components</h3>
+                    <ul class="changelog-list">
+                        <li class="added">SplashScreen — branded splash with logo, brand name, tagline, gradient, pulsing dots</li>
+                        <li class="added">WelcomeScreen — multi-step onboarding with slides, progress dots, navigation</li>
+                        <li class="added">Avatar with image, initials fallback, 4 size variants, ring, status indicator</li>
+                        <li class="added">Image with rounded corners, border, caption, hover, click</li>
+                        <li class="added">VideoPreview with thumbnail, play icon, duration badge, pulsing play</li>
+                        <li class="added">Card with title, description, optional image, hover/press/ripple, OnClick</li>
+                        <li class="added">Divider — horizontal/vertical variants with optional text</li>
+                        <li class="added">Spacer — configurable size</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section" style="margin-bottom:24px;">
+                    <h3 class="added">✦ Added — Complex Components</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Accordion — collapsible items with single/multiple open, icons, animations</li>
+                        <li class="added">TreeView — hierarchical nodes with expand/collapse, selection, nested indentation</li>
+                        <li class="added">List — scrollable, selectable items with icon/label/description</li>
+                        <li class="added">DataTable with columns, rows, sorting, selection, alternating rows</li>
+                        <li class="added">StatusIndicator with 6 statuses, optional text label, pulsing animation</li>
+                        <li class="added">Chip — interactive chip with selection state, icon, avatar, close</li>
+                        <li class="added">Tag — compact label, closable, 5 variants, icon</li>
+                        <li class="added">Breadcrumb — navigation trail with clickable items, separators, current page</li>
+                        <li class="added">Pagination with page numbers, prev/next, ellipsis</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Navigation Components</h3>
+                    <ul class="changelog-list">
+                        <li class="added">FloatingButton — FAB with 5 positions, extended variant, tooltip, pulsing glow</li>
+                        <li class="added">Sidebar — vertical nav with logo, items, footer, collapse/expand</li>
+                        <li class="added">Navbar — horizontal nav with title, links, action buttons</li>
+                        <li class="added">ContextMenu — position-based, icons, separators, disabled, danger, shortcuts</li>
+                        <li class="added">RightClickMenu — attaches ContextMenu on right-click</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Window Management</h3>
+                    <ul class="changelog-list">
+                        <li class="added">WindowManager — multi-window, focus management, z-ordering</li>
+                        <li class="added">DockingSystem with dock positions, dock zone indicators</li>
+                        <li class="added">TabsReorder — drag-to-reorder with LayoutOrder swap</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Developer Tooling</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Toasts — singleton toast manager with Notify/Info/Success/Warning/Error</li>
+                        <li class="added">CommandPalette — VS Code-style with fuzzy search, keyboard nav, Ctrl+P</li>
+                        <li class="added">Terminal — terminal-style with command input, output, history</li>
+                        <li class="added">Console — dev console with log levels, filtering, export</li>
+                        <li class="added">LogViewer — syntax-highlighted log viewer with severity filtering, auto-scroll</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Global API</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Core module access: GetCore, GetThemeSystem, GetAnimationSystem, GetEvents, GetI18n, GetPlugins</li>
+                        <li class="added">Theme API: SetTheme, GetTheme, GetThemeName, LoadTheme, SaveTheme, CreateTheme, ListThemes, SetAccent, ToggleTheme</li>
+                        <li class="added">Window API: CreateWindow, DestroyWindow, DestroyAll, GetWindows, GetActiveWindow</li>
+                        <li class="added">Notification API: Notify, NotifyInfo, NotifySuccess, NotifyWarning, NotifyError, ShowDialog</li>
+                        <li class="added">Toasts API: GetToasts, Toast</li>
+                        <li class="added">Loading/Splash API for full-screen overlays</li>
+                        <li class="added">i18n API: SetLanguage, GetLanguage, GetAvailableLanguages, Translate</li>
+                        <li class="added">Animation API: ToggleAnimations, SetAnimationSpeed</li>
+                        <li class="added">Blur API: EnableBlur, DisableBlur, SetTransparency</li>
+                        <li class="added">Component Factory: Create (universal component creation)</li>
+                        <li class="added">Command Palette API: OpenCommandPalette, CloseCommandPalette, ToggleCommandPalette</li>
+                        <li class="added">Debug Console API: OpenConsole, Log, Info, Warn, Error</li>
+                        <li class="added">Import/Export API for configurations</li>
+                        <li class="added">Version API: GetVersion, GetVersionInfo</li>
+                        <li class="added">Plugin API: RegisterPlugin, UnregisterPlugin, FireHook</li>
+                        <li class="added">Lifecycle hooks: FireHook("Init") at initialization</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Documentation</h3>
+                    <ul class="changelog-list">
+                        <li class="added">README with introduction, quick start, and architecture overview</li>
+                        <li class="added">Installation guide with 3 methods (loadstring, local script, model)</li>
+                        <li class="added">Getting started guide with step-by-step tutorial</li>
+                        <li class="added">Complete API reference with all functions documented</li>
+                        <li class="added">Components reference for all 50+ components</li>
+                        <li class="added">Themes documentation with 6 built-in themes and custom theme creation</li>
+                        <li class="added">Events & callbacks documentation (signals, promises, events)</li>
+                        <li class="added">i18n documentation</li>
+                        <li class="added">Plugin/extension documentation with full API</li>
+                        <li class="added">Examples collection with 10 complete examples</li>
+                        <li class="added">FAQ with 20+ questions</li>
+                        <li class="added">Migration guide from WindUI and other libraries</li>
+                        <li class="added">Best practices guide</li>
+                        <li class="added">Troubleshooting guide</li>
+                        <li class="added">License (MIT) and credits</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Added — Website</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Landing page with hero, interactive demo, features, component grid, theme gallery</li>
+                        <li class="added">Documentation page with sidebar navigation and full API docs</li>
+                        <li class="added">Showcase page with interactive demo and visual effects gallery</li>
+                        <li class="added">Playground with interactive code editor and live preview</li>
+                        <li class="added">Changelog page (this page)</li>
+                        <li class="added">FAQ page</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="version-card" style="border-style: dashed; opacity: 0.7;">
+                <div class="version-header">
+                    <div class="version-number">
+                        Roadmap
+                        <span class="version-badge" style="background:rgba(254,188,46,0.15);color:#febc2e;">Planned</span>
+                    </div>
+                    <div class="version-date">Q2 2026+</div>
+                </div>
+                <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:20px;">Future features planned for upcoming releases.</p>
+
+                <div class="changelog-section">
+                    <h3 class="added">Planned — v1.1.0</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Auto-update system with version checking</li>
+                        <li class="added">Marketplace for community themes and plugins</li>
+                        <li class="added">Visual theme editor with live preview</li>
+                        <li class="added">Code generator for component scaffolding</li>
+                        <li class="added">Layout generator with drag-and-drop</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Planned — v1.2.0</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Component inspector for debugging</li>
+                        <li class="added">Accessibility mode with high contrast</li>
+                        <li class="added">Full keyboard navigation</li>
+                        <li class="added">Performance benchmark suite</li>
+                        <li class="added">Developer tools panel</li>
+                    </ul>
+                </div>
+
+                <div class="changelog-section">
+                    <h3 class="added">Planned — v1.3.0</h3>
+                    <ul class="changelog-list">
+                        <li class="added">Additional languages: French (fr-FR), German (de-DE), Japanese (ja-JP)</li>
+                        <li class="added">Optional telemetry with privacy controls</li>
+                        <li class="added">Blog section on the website</li>
+                        <li class="added">Community themes marketplace integration</li>
+                        <li class="added">Discord community integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="nav-logo" style="margin-bottom: 12px;">
+                    <span class="logo-mark">V</span>
+                    <span class="logo-text">VoidUI</span>
+                </div>
+                <p>The most modern, elegant, and complete UI library for Lua/LuaU.</p>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="index.html">Home</a>
+                    <a href="docs.html">Documentation</a>
+                    <a href="showcase.html">Showcase</a>
+                    <a href="playground.html">Playground</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="changelog.html">Changelog</a>
+                    <a href="faq.html">FAQ</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Discord</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">License (MIT)</a>
+                    <a href="#">Credits</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 VoidUI by NinjaTech AI Team. Built with passion for the Lua community.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

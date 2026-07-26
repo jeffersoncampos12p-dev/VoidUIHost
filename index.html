@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoidUI — Modern UI Library for Lua/LuaU</title>
+    <meta name="description" content="A complete, modular, and elegant UI library for Lua/LuaU. 50+ components, themes, animations, i18n, plugins, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237850ff'/><text x='50' y='72' font-size='60' font-weight='900' fill='white' text-anchor='middle' font-family='sans-serif'>V</text></svg>">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">
+            <div class="logo-icon">V</div>
+            <span>VoidUI</span>
+        </a>
+        <div class="navbar-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="docs.html">Documentation</a>
+            <a href="showcase.html">Showcase</a>
+            <a href="playground.html">Playground</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="navbar-cta">
+            <a href="#" class="github-link">GitHub</a>
+            <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge animate-in">
+            <span class="badge-dot"></span>
+            Version 1.0.0 is now available
+        </div>
+        <h1 class="animate-in">The most <span class="gradient">elegant</span> UI library for Lua</h1>
+        <p class="animate-in">VoidUI is a complete, modular, and beautifully crafted UI library for Lua/LuaU. With 50+ components, six themes, animations, internationalization, and a plugin system — it's everything you need to build stunning interfaces.</p>
+        <div class="hero-cta animate-in">
+            <a href="docs.html" class="btn btn-primary">Get Started</a>
+            <a href="showcase.html" class="btn btn-secondary">View Showcase</a>
+        </div>
+        <div class="hero-stats animate-in">
+            <div class="hero-stat">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Components</div>
+            </div>
+            <div class="hero-stat">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Built-in Themes</div>
+            </div>
+            <div class="hero-stat">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="hero-stat">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Open Source</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Demo Window ===== -->
+<section class="section" style="padding-top: 20px;">
+    <div class="container">
+        <div class="demo-window">
+            <div class="demo-window-header">
+                <div class="demo-window-title">VoidUI Settings</div>
+                <div class="demo-window-controls">
+                    <div class="demo-control red"></div>
+                    <div class="demo-control yellow"></div>
+                    <div class="demo-control green"></div>
+                </div>
+            </div>
+            <div class="demo-window-tabs">
+                <div class="demo-tab active">General</div>
+                <div class="demo-tab">Appearance</div>
+                <div class="demo-tab">About</div>
+            </div>
+            <div class="demo-window-body">
+                <div class="demo-row">
+                    <span class="demo-row-label">Enable Notifications</span>
+                    <div class="demo-toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="demo-row">
+                    <span class="demo-row-label">Dark Mode</span>
+                    <div class="demo-toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="demo-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span class="demo-row-label">Volume</span>
+                        <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">60%</span>
+                    </div>
+                    <div class="demo-slider"><div class="demo-slider-fill"></div></div>
+                </div>
+                <div class="demo-row" style="justify-content: center; padding-top: 20px;">
+                    <button class="demo-button">Apply Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Features ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why VoidUI?</h2>
+            <p>Designed from the ground up to be the most complete and elegant UI library for the Lua scripting world.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Beautiful by Default</h3>
+                <p>Soft borders, rounded corners, subtle shadows, blur effects, and micro-animations create an interface that feels premium and refined.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>50+ Components</h3>
+                <p>From basic buttons and toggles to data tables, tree views, and terminal emulators — VoidUI has every component you need.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <h3>Six Built-in Themes</h3>
+                <p>Dark, Light, Midnight, Sunset, Forest, and Cyber themes ship out of the box, plus full support for custom theme creation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Smooth Animations</h3>
+                <p>Fluid transitions, ripple effects, glow effects, and hover states with object pooling for optimal performance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Internationalization</h3>
+                <p>Built-in support for English, Portuguese, and Spanish, with the ability to add any language at runtime.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Plugin System</h3>
+                <p>Extend VoidUI with custom components, themes, and lifecycle hooks through the powerful plugin architecture.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>State Persistence</h3>
+                <p>Export and import the complete application state, including themes, window positions, and component values.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Notifications & Toasts</h3>
+                <p>Built-in notification system with four variants, auto-dismiss, and a compact toast mode for quick messages.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⌨️</div>
+                <h3>Command Palette</h3>
+                <p>A VS Code-style command palette with fuzzy search and keyboard navigation for power users.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Quick Start Code ===== -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Get Started in Seconds</h2>
+            <p>Creating a full-featured interface takes just a few lines of code.</p>
+        </div>
+        <div class="code-block">
+            <div class="code-header">
+                <span class="code-lang">Lua</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+<pre><span class="comment">-- Load VoidUI</span>
+<span class="keyword">local</span> VoidUI = loadstring(game:HttpGet(URL))()
+
+<span class="comment">-- Create a window</span>
+<span class="keyword">local</span> Window = VoidUI:CreateWindow({
+    Title = <span class="string">"My Application"</span>,
+    Subtitle = <span class="string">"Powered by VoidUI"</span>,
+    Accent = Color3.fromRGB(<span class="number">120</span>, <span class="number">80</span>, <span class="number">255</span>),
+})
+
+<span class="comment">-- Add a tab and section</span>
+<span class="keyword">local</span> Tab = Window:CreateTab(<span class="string">"Settings"</span>, <span class="string">"icon"</span>)
+<span class="keyword">local</span> Section = Tab:CreateSection(<span class="string">"Preferences"</span>)
+
+<span class="comment">-- Add components</span>
+Section:CreateToggle({
+    Text = <span class="string">"Enable Animations"</span>,
+    Default = <span class="keyword">true</span>,
+    Callback = <span class="keyword">function</span>(value)
+        VoidUI:ToggleAnimations(value)
+    <span class="keyword">end</span>,
+})
+
+Section:CreateButton({
+    Text = <span class="string">"Save Settings"</span>,
+    Style = <span class="string">"Primary"</span>,
+    Callback = <span class="keyword">function</span>()
+        VoidUI:NotifySuccess(<span class="string">"Saved!"</span>, <span class="string">"Settings have been saved."</span>)
+    <span class="keyword">end</span>,
+})</pre>
+        </div>
+        <div style="text-align: center; margin-top: 32px;">
+            <a href="docs.html" class="btn btn-primary">Read the Documentation</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Components Showcase ===== -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>50+ Components at Your Fingertips</h2>
+            <p>Every component you need to build modern, professional interfaces.</p>
+        </div>
+        <div class="components-grid">
+            <div class="component-item"><div class="comp-icon">🪟</div><div class="comp-name">Window</div><div class="comp-desc">Draggable container</div></div>
+            <div class="component-item"><div class="comp-icon">📑</div><div class="comp-name">Tab</div><div class="comp-desc">Content organization</div></div>
+            <div class="component-item"><div class="comp-icon">📂</div><div class="comp-name">Section</div><div class="comp-desc">Group components</div></div>
+            <div class="component-item"><div class="comp-icon">🔘</div><div class="comp-name">Button</div><div class="comp-desc">5 style variants</div></div>
+            <div class="component-item"><div class="comp-icon">🎚️</div><div class="comp-name">Toggle</div><div class="comp-desc">iOS-style switch</div></div>
+            <div class="component-item"><div class="comp-icon">☑️</div><div class="comp-name">Checkbox</div><div class="comp-desc">Square checkbox</div></div>
+            <div class="component-item"><div class="comp-icon">📏</div><div class="comp-name">Slider</div><div class="comp-desc">Range slider</div></div>
+            <div class="component-item"><div class="comp-icon">📋</div><div class="comp-name">Dropdown</div><div class="comp-desc">Select from list</div></div>
+            <div class="component-item"><div class="comp-icon">✅</div><div class="comp-name">MultiDropdown</div><div class="comp-desc">Multi-select</div></div>
+            <div class="component-item"><div class="comp-icon">🎨</div><div class="comp-name">ColorPicker</div><div class="comp-desc">HSV color wheel</div></div>
+            <div class="component-item"><div class="comp-icon">⌨️</div><div class="comp-name">Keybind</div><div class="comp-desc">Key binding</div></div>
+            <div class="component-item"><div class="comp-icon">📝</div><div class="comp-name">Textbox</div><div class="comp-desc">Text input</div></div>
+            <div class="component-item"><div class="comp-icon">🔍</div><div class="comp-name">SearchBox</div><div class="comp-desc">Search input</div></div>
+            <div class="component-item"><div class="comp-icon">🔒</div><div class="comp-name">PasswordInput</div><div class="comp-desc">Masked input</div></div>
+            <div class="component-item"><div class="comp-icon">💻</div><div class="comp-name">CodeEditor</div><div class="comp-desc">Code editing</div></div>
+            <div class="component-item"><div class="comp-icon">🔔</div><div class="comp-name">Notification</div><div class="comp-desc">Toast alerts</div></div>
+            <div class="component-item"><div class="comp-icon">❓</div><div class="comp-name">Dialog</div><div class="comp-desc">Modal dialog</div></div>
+            <div class="component-item"><div class="comp-icon">💡</div><div class="comp-name">Tooltip</div><div class="comp-desc">Hover info</div></div>
+            <div class="component-item"><div class="comp-icon">🏷️</div><div class="comp-name">Badge</div><div class="comp-desc">Status badges</div></div>
+            <div class="component-item"><div class="comp-icon">📊</div><div class="comp-name">ProgressBar</div><div class="comp-desc">Progress display</div></div>
+            <div class="component-item"><div class="comp-icon">⏳</div><div class="comp-name">LoadingScreen</div><div class="comp-desc">Loading overlay</div></div>
+            <div class="component-item"><div class="comp-icon">🚀</div><div class="comp-name">SplashScreen</div><div class="comp-desc">Branded splash</div></div>
+            <div class="component-item"><div class="comp-icon">👋</div><div class="comp-name">WelcomeScreen</div><div class="comp-desc">Onboarding flow</div></div>
+            <div class="component-item"><div class="comp-icon">🃏</div><div class="comp-name">Card</div><div class="comp-desc">Content card</div></div>
+            <div class="component-item"><div class="comp-icon">👤</div><div class="comp-name">Avatar</div><div class="comp-desc">User avatars</div></div>
+            <div class="component-item"><div class="comp-icon">🖼️</div><div class="comp-name">Image</div><div class="comp-desc">Image display</div></div>
+            <div class="component-item"><div class="comp-icon">🎬</div><div class="comp-name">VideoPreview</div><div class="comp-desc">Video thumbnail</div></div>
+            <div class="component-item"><div class="comp-icon">↕️</div><div class="comp-name">Accordion</div><div class="comp-desc">Expandable items</div></div>
+            <div class="component-item"><div class="comp-icon">🌲</div><div class="comp-name">TreeView</div><div class="comp-desc">Hierarchical tree</div></div>
+            <div class="component-item"><div class="comp-icon">📜</div><div class="comp-name">List</div><div class="comp-desc">Scrollable list</div></div>
+            <div class="component-item"><div class="comp-icon">📊</div><div class="comp-name">DataTable</div><div class="comp-desc">Tabular data</div></div>
+            <div class="component-item"><div class="comp-icon">🟢</div><div class="comp-name">StatusIndicator</div><div class="comp-desc">Status dots</div></div>
+            <div class="component-item"><div class="comp-icon">🔘</div><div class="comp-name">Chip</div><div class="comp-desc">Filter chips</div></div>
+            <div class="component-item"><div class="comp-icon">🏷️</div><div class="comp-name">Tag</div><div class="comp-desc">Category labels</div></div>
+            <div class="component-item"><div class="comp-icon">🧭</div><div class="comp-name">Breadcrumb</div><div class="comp-desc">Navigation trail</div></div>
+            <div class="component-item"><div class="comp-icon">📄</div><div class="comp-name">Pagination</div><div class="comp-desc">Page controls</div></div>
+            <div class="component-item"><div class="comp-icon">⬆️</div><div class="comp-name">FloatingButton</div><div class="comp-desc">FAB button</div></div>
+            <div class="component-item"><div class="comp-icon">📍</div><div class="comp-name">Sidebar</div><div class="comp-desc">Side navigation</div></div>
+            <div class="component-item"><div class="comp-icon">📊</div><div class="comp-name">Navbar</div><div class="comp-desc">Top navigation</div></div>
+            <div class="component-item"><div class="comp-icon">🖱️</div><div class="comp-name">ContextMenu</div><div class="comp-desc">Right-click menu</div></div>
+            <div class="component-item"><div class="comp-icon">🖥️</div><div class="comp-name">Terminal</div><div class="comp-desc">Terminal emulator</div></div>
+            <div class="component-item"><div class="comp-icon">📟</div><div class="comp-name">Console</div><div class="comp-desc">Debug console</div></div>
+            <div class="component-item"><div class="comp-icon">📋</div><div class="comp-name">LogViewer</div><div class="comp-desc">Log display</div></div>
+            <div class="component-item"><div class="comp-icon">🔄</div><div class="comp-name">CommandPalette</div><div class="comp-desc">Command search</div></div>
+            <div class="component-item"><div class="comp-icon">🪟</div><div class="comp-name">WindowManager</div><div class="comp-desc">Multi-window</div></div>
+            <div class="component-item"><div class="comp-icon">📌</div><div class="comp-name">DockingSystem</div><div class="comp-desc">Window docking</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Themes Showcase ===== -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Six Beautiful Themes</h2>
+            <p>Choose from six carefully designed themes, or create your own custom theme.</p>
+        </div>
+        <div class="theme-grid">
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #1a1a25, #12121a); color: #e8e8f0;">Dark</div>
+                <div class="theme-info"><h4>Dark</h4><p>Default theme</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #f5f5fa, #ffffff); color: #2a2a3a;">Light</div>
+                <div class="theme-info"><h4>Light</h4><p>Clean & bright</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #0a0a1a, #050510); color: #a0c0ff;">Midnight</div>
+                <div class="theme-info"><h4>Midnight</h4><p>Deep & focused</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #1a1015, #150a10); color: #ff8060;">Sunset</div>
+                <div class="theme-info"><h4>Sunset</h4><p>Warm & vibrant</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #0a1a12, #051510); color: #60ff80;">Forest</div>
+                <div class="theme-info"><h4>Forest</h4><p>Nature-inspired</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #050a1a, #000510); color: #00c0ff;">Cyber</div>
+                <div class="theme-info"><h4>Cyber</h4><p>Neon futuristic</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section" style="text-align: center;">
+    <div class="container">
+        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 16px;">Ready to Build Something Beautiful?</h2>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px;">Start building elegant interfaces with VoidUI today. It's free, open source, and ready to use.</p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="docs.html" class="btn btn-primary">Get Started</a>
+            <a href="showcase.html" class="btn btn-secondary">View Showcase</a>
+            <a href="playground.html" class="btn btn-ghost">Try the Playground</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">
+                    <div class="logo-icon">V</div>
+                    <span>VoidUI</span>
+                </div>
+                <p>The most modern, elegant, and complete UI library for Lua/LuaU. Built for performance, extensibility, and beauty.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Documentation</h4>
+                <a href="docs.html">Getting Started</a>
+                <a href="docs.html">API Reference</a>
+                <a href="docs.html">Components</a>
+                <a href="docs.html">Themes</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="showcase.html">Showcase</a>
+                <a href="playground.html">Playground</a>
+                <a href="changelog.html">Changelog</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <a href="#">GitHub</a>
+                <a href="#">Discord</a>
+                <a href="#">Report a Bug</a>
+                <a href="#">Contribute</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 NinjaTech AI Team. VoidUI is released under the MIT License.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+function copyCode(btn) {
+    const code = btn.closest('.code-block').querySelector('pre').textContent;
+    navigator.clipboard.writeText(code).then(function() {
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showcase — VoidUI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237850ff'/><text x='50' y='72' font-size='60' font-weight='900' fill='white' text-anchor='middle' font-family='sans-serif'>V</text></svg>">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">
+            <div class="logo-icon">V</div>
+            <span>VoidUI</span>
+        </a>
+        <div class="navbar-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="docs.html">Documentation</a>
+            <a href="showcase.html" class="active">Showcase</a>
+            <a href="playground.html">Playground</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="navbar-cta">
+            <a href="#" class="github-link">GitHub</a>
+            <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" style="padding-top: 120px;">
+    <div class="container">
+        <h1 class="animate-in">Showcase</h1>
+        <p class="animate-in">See VoidUI in action. Explore the visual design, component styles, and theme variations that make VoidUI the most elegant UI library for Lua.</p>
+    </div>
+</section>
+
+<!-- Window Demo -->
+<section class="section" style="padding-top: 20px;">
+    <div class="container">
+        <div class="section-header">
+            <h2>Window & Components</h2>
+            <p>A realistic preview of a VoidUI window with multiple component types.</p>
+        </div>
+        <div class="demo-window">
+            <div class="demo-window-header">
+                <div class="demo-window-title">⬇ VoidUI Demo Window</div>
+                <div class="demo-window-controls">
+                    <div class="demo-control red"></div>
+                    <div class="demo-control yellow"></div>
+                    <div class="demo-control green"></div>
+                </div>
+            </div>
+            <div class="demo-window-tabs">
+                <div class="demo-tab active">📊 General</div>
+                <div class="demo-tab">🎨 Appearance</div>
+                <div class="demo-tab">⚙️ Advanced</div>
+                <div class="demo-tab">ℹ️ About</div>
+            </div>
+            <div class="demo-window-body">
+                <div class="demo-row">
+                    <span class="demo-row-label">Enable Notifications</span>
+                    <div class="demo-toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="demo-row">
+                    <span class="demo-row-label">Dark Mode</span>
+                    <div class="demo-toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="demo-row">
+                    <span class="demo-row-label">Auto-Save</span>
+                    <div class="demo-toggle" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="demo-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span class="demo-row-label">Animation Speed</span>
+                        <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">1.5x</span>
+                    </div>
+                    <div class="demo-slider"><div class="demo-slider-fill" style="width: 75%;"></div></div>
+                </div>
+                <div class="demo-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span class="demo-row-label">Transparency</span>
+                        <span style="color: var(--accent); font-weight: 600; font-size: 0.9rem;">10%</span>
+                    </div>
+                    <div class="demo-slider"><div class="demo-slider-fill" style="width: 33%;"></div></div>
+                </div>
+                <div class="demo-row" style="justify-content: center; padding-top: 20px; border-bottom: none; gap: 12px;">
+                    <button class="demo-button">Apply Changes</button>
+                    <button class="demo-button" style="background: var(--bg-tertiary); border: 1px solid var(--border); color: var(--text);">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Theme Showcase -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Theme Gallery</h2>
+            <p>All six built-in themes, each with its own unique personality.</p>
+        </div>
+        <div class="theme-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #1a1a25, #12121a); color: #e8e8f0; border-bottom: 3px solid #7850ff;">Dark</div>
+                <div class="theme-info"><h4>Dark</h4><p>Deep dark with purple accent</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #f0f0f8, #ffffff); color: #2a2a3a; border-bottom: 3px solid #7850ff;">Light</div>
+                <div class="theme-info"><h4>Light</h4><p>Clean and bright</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #0a0a1a, #050510); color: #a0c0ff; border-bottom: 3px solid #4060ff;">Midnight</div>
+                <div class="theme-info"><h4>Midnight</h4><p>Deep blue, immersive</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #1a1015, #150a10); color: #ff8060; border-bottom: 3px solid #ff6040;">Sunset</div>
+                <div class="theme-info"><h4>Sunset</h4><p>Warm and vibrant</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #0a1a12, #051510); color: #60ff80; border-bottom: 3px solid #40c060;">Forest</div>
+                <div class="theme-info"><h4>Forest</h4><p>Nature-inspired green</p></div>
+            </div>
+            <div class="theme-card">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #050a1a, #000510); color: #00c0ff; border-bottom: 3px solid #0080ff;">Cyber</div>
+                <div class="theme-info"><h4>Cyber</h4><p>Neon, futuristic</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Component Categories -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Component Categories</h2>
+            <p>VoidUI components are organized into logical categories for easy navigation.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏗️</div>
+                <h3>Structural</h3>
+                <p>Window, Tab, SubTab, Section, GroupBox — the building blocks of your interface hierarchy.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⌨️</div>
+                <h3>Input</h3>
+                <p>Button, Toggle, Checkbox, Slider, Dropdown, ColorPicker, Keybind, Textbox, and more for collecting user input.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Feedback</h3>
+                <p>Notification, Dialog, Modal, Tooltip, Badge, ProgressBar, LoadingScreen for communicating with users.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>Display</h3>
+                <p>SplashScreen, WelcomeScreen, Card, Avatar, Image, VideoPreview, Divider, Spacer for presenting content.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Complex Data</h3>
+                <p>Accordion, TreeView, List, DataTable, StatusIndicator, Chip, Tag, Breadcrumb, Pagination for structured information.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧭</div>
+                <h3>Navigation</h3>
+                <p>FloatingButton, Sidebar, Navbar, ContextMenu, RightClickMenu for application navigation patterns.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🪟</div>
+                <h3>Window Management</h3>
+                <p>WindowManager, DockingSystem, TabsReorder for managing multiple windows and their layout.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🖥️</div>
+                <h3>Developer Tools</h3>
+                <p>Toasts, CommandPalette, Terminal, Console, LogViewer for building developer-facing interfaces.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Visual Effects -->
+<section class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+        <div class="section-header">
+            <h2>Visual Effects</h2>
+            <p>The subtle details that make VoidUI interfaces feel premium and refined.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌫️</div>
+                <h3>Acrylic Blur</h3>
+                <p>Blur effects behind windows create depth and a modern glass aesthetic.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💧</div>
+                <h3>Ripple Effects</h3>
+                <p>Material-style ripple animations on interactive elements with object pooling for performance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>Glow Effects</h3>
+                <p>Subtle glow on hover and focus states adds polish without being overwhelming.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📐</div>
+                <h3>Smooth Tweens</h3>
+                <p>Fluid transitions on every interaction using TweenService with configurable speed and quality.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌈</div>
+                <h3>Gradients</h3>
+                <p>Subtle gradients on primary buttons, progress bars, and accents for visual depth.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⬜</div>
+                <h3>Soft Borders</h3>
+                <p>Rounded corners with subtle border colors create a refined, modern appearance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom">
+            <p>© 2026 NinjaTech AI Team. VoidUI is released under the MIT License.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

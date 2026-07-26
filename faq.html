@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — VoidUI</title>
+    <meta name="description" content="Frequently asked questions about VoidUI — the modern UI library for Lua/LuaU.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237850ff'/><text x='50' y='72' font-size='62' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>V</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .faq-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+        .faq-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .faq-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .faq-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .faq-search {
+            max-width: 480px;
+            margin: 24px auto 0;
+            position: relative;
+        }
+        .faq-search input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .faq-search input:focus {
+            border-color: var(--accent);
+        }
+        .faq-search input::placeholder {
+            color: var(--text-secondary);
+        }
+        .faq-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+        .faq-category {
+            margin-bottom: 40px;
+        }
+        .faq-category-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-category-title .category-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(120, 80, 255, 0.12);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .faq-category-title .category-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: rgba(120, 80, 255, 0.2);
+        }
+        .faq-item.open {
+            border-color: rgba(120, 80, 255, 0.4);
+        }
+        .faq-question {
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .faq-question:hover {
+            background: rgba(120, 80, 255, 0.04);
+        }
+        .faq-chevron {
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 24px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            padding: 0 24px 20px;
+        }
+        .faq-answer p {
+            margin-bottom: 12px;
+        }
+        .faq-answer code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(120, 80, 255, 0.1);
+            color: var(--accent);
+        }
+        .faq-answer pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #e0e0f0;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .faq-answer ul {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        .faq-answer li {
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            display: none;
+        }
+        .no-results.show { display: block; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-mark">V</span>
+                <span class="logo-text">VoidUI</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="docs.html">Documentation</a></li>
+                <li><a href="showcase.html">Showcase</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="changelog.html">Changelog</a></li>
+                <li><a href="faq.html" class="active">FAQ</a></li>
+                <a href="#" class="btn btn-outline nav-cta">GitHub</a>
+            </ul>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <div class="faq-container">
+        <div class="faq-header">
+            <h1>Frequently Asked <span class="gradient-text">Questions</span></h1>
+            <p>Everything you need to know about VoidUI — installation, usage, components, and more.</p>
+        </div>
+
+        <div class="faq-search">
+            <svg class="faq-search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="faqSearch" placeholder="Search questions...">
+        </div>
+
+        <!-- General -->
+        <div class="faq-category" data-category="general">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+                General
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What is VoidUI? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI is a modern, elegant, and complete UI library for Lua/LuaU, designed for building premium user interfaces in the Roblox environment. It features 50+ components, 6 built-in themes, 3 language packs, a full plugin system, and comprehensive documentation — all built from scratch with an original architecture and visual identity.</p>
+                    <p>Unlike other libraries that wrap existing code, VoidUI was designed and built entirely from the ground up, with inspiration taken from WindUI's organizational concepts but with completely original code, visual design, and API.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is VoidUI free to use? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Yes! VoidUI is open source and released under the MIT License. You are free to use it in personal and commercial projects, modify it, and distribute it. The only requirement is to include the original copyright notice and license text.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What Lua/LuaU versions are supported? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI is built for LuaU, the dialect of Lua used in Roblox. It leverages Roblox-specific services like <code>TweenService</code>, <code>HttpService</code>, <code>UserInputService</code>, and <code>CoreGui</code>. The library is compatible with all current Roblox executor environments.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How is VoidUI different from other UI libraries? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI stands out in several key areas:</p>
+                    <ul>
+                        <li><strong>Original codebase</strong> — built from scratch, not a wrapper around existing libraries</li>
+                        <li><strong>50+ components</strong> — the most complete component set available</li>
+                        <li><strong>6 built-in themes</strong> with full custom theme support</li>
+                        <li><strong>3 languages</strong> built-in (pt-BR, en-US, es-ES)</li>
+                        <li><strong>Plugin system</strong> with hooks, custom components, and themes</li>
+                        <li><strong>Developer tools</strong> — Command Palette, Terminal, Console, LogViewer</li>
+                        <li><strong>Modern animations</strong> — ripple, glow, hover, press, pulse, and more</li>
+                        <li><strong>Comprehensive documentation</strong> — 16 documentation files and an official website</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Where can I get the source code? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI is available on GitHub. You can clone the repository, download the latest release, or use the loadstring method for quick installation. See the <a href="docs.html">documentation</a> for detailed installation instructions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage -->
+        <div class="faq-category" data-category="usage">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.121 14.121L19 19m-7-7l7-7m7 7l-7 7-7-7"/></svg></span>
+                Usage
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I create my first window? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Creating a window is simple:</p>
+                    <pre>local VoidUI = loadstring(game:HttpGet(
+    "https://voidui.dev/latest.lua"
+))()
+
+local Window = VoidUI:CreateWindow({
+    Title = "My App",
+    Theme = "Dark",
+    Size = Vector2.new(580, 460),
+})
+
+local Tab = Window:AddTab({ Title = "Home" })
+local Section = Tab:AddSection({ Title = "Settings" })
+Section:AddButton({ Text = "Hello!", OnClick = function() end })</pre>
+                    <p>See the <a href="docs.html">getting started guide</a> for a complete walkthrough.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I change the theme? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>You can change the theme at any time using the global API:</p>
+                    <pre>VoidUI:SetTheme("Light")  -- or "Dark", "Midnight", "Sunset", "Forest", "Cyber"</pre>
+                    <p>You can also create custom themes with <code>VoidUI:CreateTheme()</code> and save/load them with <code>SaveTheme()</code> and <code>LoadTheme()</code>.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I handle events and callbacks? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI uses a Signal-based event system. Most components accept callback functions directly in their configuration:</p>
+                    <pre>Section:AddButton({
+    Text = "Save",
+    OnClick = function()
+        print("Saved!")
+    end,
+})
+
+Section:AddToggle({
+    Text = "Enable feature",
+    OnChanged = function(value)
+        print("Feature enabled:", value)
+    end,
+})</pre>
+                    <p>You can also connect to signals manually using <code>:Connect()</code> for more control over event handling and disconnection.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I save and restore the UI state? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI includes a StateManager in the VoidCore module that handles config persistence. You can save the current state and load it later:</p>
+                    <pre>-- Save current state
+VoidUI:Export("myConfig")
+
+-- Load saved state
+VoidUI:Import("myConfig")</pre>
+                    <p>Toggle and slider values, dropdown selections, and other component states are automatically persisted when configured.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Components -->
+        <div class="faq-category" data-category="components">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></span>
+                Components
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How many components does VoidUI have? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI includes 50+ components organized into 8 categories:</p>
+                    <ul>
+                        <li><strong>Structural:</strong> Window, Tab, SubTab, Section, GroupBox</li>
+                        <li><strong>Input:</strong> Button, Toggle, Checkbox, Slider, Dropdown, MultiDropdown, ColorPicker, Keybind, Textbox, Input, PasswordInput, SearchBox, CodeEditor</li>
+                        <li><strong>Feedback:</strong> Notification, Dialog, Modal, Tooltip, LoadingScreen, Badge, ProgressBar</li>
+                        <li><strong>Display:</strong> SplashScreen, WelcomeScreen, Avatar, Image, VideoPreview, Card, Divider, Spacer, Label, Paragraph</li>
+                        <li><strong>Complex:</strong> Accordion, TreeView, List, DataTable, StatusIndicator, Chip, Tag, Breadcrumb, Pagination</li>
+                        <li><strong>Navigation:</strong> FloatingButton, Sidebar, Navbar, ContextMenu, RightClickMenu</li>
+                        <li><strong>Window Management:</strong> WindowManager, DockingSystem, TabsReorder</li>
+                        <li><strong>Developer Tooling:</strong> Toasts, CommandPalette, Terminal, Console, LogViewer</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I create custom components? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Yes! The Plugin System allows you to register custom components that integrate seamlessly with the rest of the library:</p>
+                    <pre>local Plugin = VoidUI:GetPlugins():Register("MyPlugin")
+Plugin:RegisterComponent("MyWidget", function(config)
+    -- Create your custom component here
+    return {
+        Instance = frame,
+        SetValue = function(self, val) end,
+        OnChanged = Signal.new(),
+    }
+end)
+
+-- Then use it:
+Section:AddMyWidget({ Title = "My Custom Widget" })</pre>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I use the ColorPicker? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>The ColorPicker provides an HSV color wheel, saturation/value area, hue slider, and hex input:</p>
+                    <pre>Section:AddColorPicker({
+    Text = "Accent Color",
+    Default = Color3.fromRGB(120, 80, 255),
+    OnChanged = function(color)
+        print("Color:", color)
+    end,
+})</pre>
+                    <p>The <code>OnChanged</code> callback fires whenever the user selects a new color, passing the <code>Color3</code> value.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I use the Keybind component? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>The Keybind component allows users to set a keyboard shortcut by pressing a key. It supports trigger modes (OnPress, OnRelease, OnToggle):</p>
+                    <pre>Section:AddKeybind({
+    Text = "Toggle UI",
+    Default = Enum.KeyCode.RightShift,
+    Mode = "Toggle",
+    OnTriggered = function()
+        print("Keybind triggered!")
+    end,
+    OnChanged = function(keyCode)
+        print("Key changed to:", keyCode)
+    end,
+})</pre>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I show notifications? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI provides several notification methods:</p>
+                    <pre>VoidUI:Notify({
+    Title = "Update Available",
+    Description = "Version 2.0 is ready to install",
+    Duration = 5,
+})
+
+VoidUI:NotifySuccess({ Title = "Saved!", Description = "Settings updated" })
+VoidUI:NotifyWarning({ Title = "Warning", Description = "Low memory" })
+VoidUI:NotifyError({ Title = "Error", Description = "Failed to connect" })</pre>
+                    <p>You can also use the Toasts system for stacked, dismissible notifications with <code>VoidUI:Toast()</code>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance -->
+        <div class="faq-category" data-category="performance">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+                Performance
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is VoidUI performant? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Yes. VoidUI is built with performance in mind:</p>
+                    <ul>
+                        <li><strong>Object pooling</strong> for ripple effects and reusable UI elements</li>
+                        <li><strong>Efficient tweens</strong> using Roblox's TweenService with minimal overhead</li>
+                        <li><strong>Lazy initialization</strong> — components are only created when needed</li>
+                        <li><strong>Auto-disconnect</strong> — signals clean up automatically to prevent memory leaks</li>
+                        <li><strong>Debounced inputs</strong> — search boxes and text inputs use debouncing to reduce callback frequency</li>
+                    </ul>
+                    <p>You can also toggle animations off with <code>VoidUI:ToggleAnimations(false)</code> for maximum performance on low-end devices.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I disable animations for better performance? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Yes! You can disable all animations globally:</p>
+                    <pre>VoidUI:ToggleAnimations(false)</pre>
+                    <p>You can also adjust the animation speed:</p>
+                    <pre>VoidUI:SetAnimationSpeed(0.5)  -- Faster animations
+VoidUI:SetAnimationSpeed(2.0)  -- Slower animations</pre>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Does VoidUI cause memory leaks? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>No. VoidUI is designed to prevent memory leaks through automatic cleanup:</p>
+                    <ul>
+                        <li>Signals auto-disconnect when components are destroyed</li>
+                        <li>The <code>:Destroy()</code> method cleans up all references, connections, and instances</li>
+                        <li>Object pooling reuses instances instead of creating new ones</li>
+                        <li>Tween callbacks are cleaned up after completion</li>
+                    </ul>
+                    <p>Always call <code>:Destroy()</code> on windows and components when you're done with them to ensure proper cleanup.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theming -->
+        <div class="faq-category" data-category="theming">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.343-1.343m0 0a2 2 0 102.828 2.828m-2.828-2.828L7 8m8 4l3 3m-3-3l-3 3"/></svg></span>
+                Theming
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What themes are available? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI includes 6 built-in themes:</p>
+                    <ul>
+                        <li><strong>Dark</strong> — the default theme with deep dark backgrounds and purple accent</li>
+                        <li><strong>Light</strong> — clean light theme with soft shadows</li>
+                        <li><strong>Midnight</strong> — ultra-dark theme with blue undertones</li>
+                        <li><strong>Sunset</strong> — warm theme with orange and pink accents</li>
+                        <li><strong>Forest</strong> — nature-inspired with green accents</li>
+                        <li><strong>Cyber</strong> — neon cyberpunk with vibrant colors</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I create a custom theme? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>You can create a custom theme by providing a color palette:</p>
+                    <pre>VoidUI:CreateTheme("MyTheme", {
+    Background = Color3.fromRGB(18, 18, 28),
+    Surface = Color3.fromRGB(24, 24, 38),
+    SurfaceVariant = Color3.fromRGB(30, 30, 48),
+    Primary = Color3.fromRGB(120, 80, 255),
+    Secondary = Color3.fromRGB(100, 100, 220),
+    Text = Color3.fromRGB(230, 230, 245),
+    SubText = Color3.fromRGB(150, 150, 170),
+    Border = Color3.fromRGB(40, 40, 60),
+    Accent = Color3.fromRGB(120, 80, 255),
+    Error = Color3.fromRGB(255, 90, 90),
+    Warning = Color3.fromRGB(255, 180, 60),
+    Success = Color3.fromRGB(40, 200, 80),
+})
+
+VoidUI:SetTheme("MyTheme")</pre>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I change the accent color without changing the entire theme? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Yes! You can set just the accent color while keeping the rest of the current theme:</p>
+                    <pre>VoidUI:SetAccent(Color3.fromRGB(0, 200, 255))</pre>
+                    <p>This updates the accent color across all components in real-time without requiring a full theme change.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- i18n -->
+        <div class="faq-category" data-category="i18n">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.75 1a5.685 5.685 0 00-5.223 3.5M6.412 9c.283.853.546 1.55.94 2.5M6.412 9a5.685 5.685 0 00-3.223 5.5M4.5 16a5.685 5.685 0 003.223 5.5"/></svg></span>
+                Internationalization
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What languages are supported? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>VoidUI includes built-in translations for 3 languages:</p>
+                    <ul>
+                        <li><strong>English (en-US)</strong> — default language</li>
+                        <li><strong>Portuguese (pt-BR)</strong> — Brazilian Portuguese</li>
+                        <li><strong>Spanish (es-ES)</strong> — Castilian Spanish</li>
+                    </ul>
+                    <p>Additional languages are planned for future releases.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I change the language? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Use the <code>SetLanguage</code> function:</p>
+                    <pre>VoidUI:SetLanguage("pt-BR")  -- Portuguese
+VoidUI:SetLanguage("en-US")  -- English
+VoidUI:SetLanguage("es-ES")  -- Spanish</pre>
+                    <p>You can also add your own translations with <code>AddTranslations()</code> or register a completely new language with <code>AddLanguage()</code>.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I add my own translations? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Yes! You can add translations for existing languages or create entirely new ones:</p>
+                    <pre>-- Add translations to an existing language
+VoidUI:GetI18n():AddTranslations("en-US", {
+    MyButton = "Click Here",
+    MyLabel = "Welcome to my app",
+})
+
+-- Add a completely new language
+VoidUI:GetI18n():AddLanguage("fr-FR", {
+    -- Full translation table
+    MyButton = "Cliquez ici",
+    -- ...
+})
+
+VoidUI:SetLanguage("fr-FR")</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plugins -->
+        <div class="faq-category" data-category="plugins">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></span>
+                Plugins & Extensions
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What is the Plugin System? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>The Plugin System allows developers to extend VoidUI with custom components, themes, and lifecycle hooks. Plugins have access to the full VoidUI API through the plugin utilities:</p>
+                    <ul>
+                        <li><code>RegisterComponent</code> — add custom components</li>
+                        <li><code>RegisterTheme</code> — add custom themes</li>
+                        <li><code>On</code> — hook into lifecycle events (Init, BeforeCreate, AfterCreate, etc.)</li>
+                        <li><code>Utils</code> — access core utilities</li>
+                        <li><code>Color</code> — color manipulation utilities</li>
+                        <li><code>Create</code> — instance creation helper</li>
+                        <li><code>Tween</code> — animation helper</li>
+                        <li><code>GetTheme</code> — current theme access</li>
+                        <li><code>Log</code> — logging system</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I register a plugin? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Register a plugin using the Plugin System:</p>
+                    <pre>local Plugin = VoidUI:GetPlugins():Register("MyPlugin")
+
+Plugin:On("Init", function()
+    Plugin:Log("MyPlugin initialized!")
+end)
+
+Plugin:RegisterComponent("MyWidget", function(config)
+    -- Create and return your custom component
+end)
+
+Plugin:RegisterTheme("MyTheme", { -- theme colors })</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="faq-category" data-category="troubleshooting">
+            <div class="faq-category-title">
+                <span class="category-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.296 2.413-1.296 2.839 0a1.69 1.69 0 002.499.816c1.148-.598 2.495.74 1.897 1.889a1.69 1.69 0 00.816 2.499c1.296.426 1.296 2.413 0 2.839a1.69 1.69 0 00-.816 2.499c.598 1.148-.74 2.495-1.889 1.897a1.69 1.69 0 00-2.499.816c-.426 1.296-2.413 1.296-2.839 0a1.69 1.69 0 00-2.499-.816c-1.148.598-2.495-.74-1.897-1.889a1.69 1.69 0 00-.816-2.499c-1.296-.426-1.296-2.413 0-2.839a1.69 1.69 0 00.816-2.499c-.598-1.148.74-2.495 1.889-1.897a1.69 1.69 0 002.499-.816z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+                Troubleshooting
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">My window isn't showing up. What should I do? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Common causes for windows not appearing:</p>
+                    <ul>
+                        <li>Make sure the library loaded successfully — check for errors in the console</li>
+                        <li>Ensure you're running in an environment that supports <code>CoreGui</code></li>
+                        <li>Verify that <code>CreateWindow</code> is being called and the return value is stored</li>
+                        <li>Check that the window's parent isn't being destroyed by other scripts</li>
+                        <li>Try calling <code>Window:SetVisible(true)</code> explicitly</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">My theme changes aren't applying. Why? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>If theme changes aren't being applied:</p>
+                    <ul>
+                        <li>Make sure you're using a valid theme name (<code>VoidUI:ListThemes()</code> to check)</li>
+                        <li>If using a custom theme, verify it was created with <code>CreateTheme</code> before calling <code>SetTheme</code></li>
+                        <li>Check that all required color properties are present in your custom theme</li>
+                        <li>Ensure components were created after the theme was set, or use <code>VoidUI:SetTheme()</code> which updates existing components</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I report a bug or request a feature? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>You can report bugs and request features through:</p>
+                    <ul>
+                        <li><strong>GitHub Issues</strong> — the primary channel for bug reports and feature requests</li>
+                        <li><strong>Discord</strong> — join our community server for support and discussions</li>
+                        <li><strong>Documentation</strong> — check the troubleshooting guide and FAQ first</li>
+                    </ul>
+                    <p>When reporting a bug, please include: VoidUI version, your Lua environment, a minimal reproduction example, and any error messages.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Where can I get help? <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                <div class="faq-answer">
+                    <p>Help is available through several channels:</p>
+                    <ul>
+                        <li><strong>Documentation</strong> — comprehensive docs covering all features</li>
+                        <li><strong>Showcase</strong> — interactive demos and examples</li>
+                        <li><strong>Playground</strong> — experiment with code in real-time</li>
+                        <li><strong>FAQ</strong> — this page with common questions answered</li>
+                        <li><strong>Discord</strong> — community support and discussions</li>
+                        <li><strong>GitHub</strong> — issues and source code</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-results" id="noResults">
+            <h3 style="font-size:1.2rem; margin-bottom:8px;">No results found</h3>
+            <p>Try different search terms or browse the categories above.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="nav-logo" style="margin-bottom: 12px;">
+                    <span class="logo-mark">V</span>
+                    <span class="logo-text">VoidUI</span>
+                </div>
+                <p>The most modern, elegant, and complete UI library for Lua/LuaU.</p>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="index.html">Home</a>
+                    <a href="docs.html">Documentation</a>
+                    <a href="showcase.html">Showcase</a>
+                    <a href="playground.html">Playground</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="changelog.html">Changelog</a>
+                    <a href="faq.html">FAQ</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Discord</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">License (MIT)</a>
+                    <a href="#">Credits</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 VoidUI by NinjaTech AI Team. Built with passion for the Lua community.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('faqSearch');
+        const noResults = document.getElementById('noResults');
+        const categories = document.querySelectorAll('.faq-category');
+        const items = document.querySelectorAll('.faq-item');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            categories.forEach(cat => {
+                let catVisible = false;
+                cat.querySelectorAll('.faq-item').forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (query === '' || text.includes(query)) {
+                        item.style.display = '';
+                        catVisible = true;
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                cat.style.display = catVisible ? '' : 'none';
+            });
+
+            noResults.classList.toggle('show', visibleCount === 0);
+        });
+
+        // Hamburger menu
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

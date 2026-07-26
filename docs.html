@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation — VoidUI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237850ff'/><text x='50' y='72' font-size='60' font-weight='900' fill='white' text-anchor='middle' font-family='sans-serif'>V</text></svg>">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="index.html" class="navbar-logo">
+            <div class="logo-icon">V</div>
+            <span>VoidUI</span>
+        </a>
+        <div class="navbar-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="docs.html" class="active">Documentation</a>
+            <a href="showcase.html">Showcase</a>
+            <a href="playground.html">Playground</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="navbar-cta">
+            <a href="#" class="github-link">GitHub</a>
+            <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+        </div>
+    </div>
+</nav>
+
+<div class="docs-layout">
+    <aside class="docs-sidebar">
+        <h3>Getting Started</h3>
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#quick-start">Quick Start</a></li>
+        </ul>
+        <h3>Reference</h3>
+        <ul>
+            <li><a href="#api">API Reference</a></li>
+            <li><a href="#components">Components</a></li>
+            <li><a href="#themes">Themes</a></li>
+            <li><a href="#events">Events & Callbacks</a></li>
+            <li><a href="#i18n">Internationalization</a></li>
+            <li><a href="#plugins">Plugins</a></li>
+        </ul>
+        <h3>Guides</h3>
+        <ul>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#migration">Migration Guide</a></li>
+        </ul>
+        <h3>Other</h3>
+        <ul>
+            <li><a href="#changelog">Changelog</a></li>
+            <li><a href="#license">License</a></li>
+        </ul>
+    </aside>
+
+    <main class="docs-content">
+        <h1 id="intro">VoidUI Documentation</h1>
+        <p>Welcome to the VoidUI documentation. VoidUI is a complete, modular, and elegant UI library for Lua/LuaU, designed to be one of the most modern and complete UI libraries available. This documentation covers everything from installation to advanced usage patterns.</p>
+
+        <h2 id="installation">Installation</h2>
+        <p>VoidUI can be loaded using a loadstring call that fetches the library from a hosted source, or by requiring a local copy of the source files. The simplest approach is to use the loadstring method:</p>
+        <pre><code>local VoidUI = loadstring(game:HttpGet(URL))()</code></pre>
+        <p>For local installations, place the entire <code>src</code> directory into your project and require the main loader file:</p>
+        <pre><code>local VoidUI = require(script.Parent.src.VoidUI)</code></pre>
+
+        <h2 id="quick-start">Quick Start</h2>
+        <p>After loading the library, you can create a window, add tabs and sections, and populate them with components in just a few lines of code:</p>
+        <pre><code>local VoidUI = loadstring(game:HttpGet(URL))()
+
+local Window = VoidUI:CreateWindow({
+    Title = "My Application",
+    Subtitle = "Powered by VoidUI",
+})
+
+local Tab = Window:CreateTab("Settings", "rbxassetid://iconId")
+local Section = Tab:CreateSection("Preferences")
+
+Section:CreateToggle({
+    Text = "Enable Animations",
+    Default = true,
+    Callback = function(value)
+        VoidUI:ToggleAnimations(value)
+    end,
+})
+
+Section:CreateButton({
+    Text = "Save",
+    Style = "Primary",
+    Callback = function()
+        VoidUI:NotifySuccess("Saved!", "Your settings have been saved.")
+    end,
+})</code></pre>
+
+        <h2 id="api">API Reference</h2>
+        <p>The VoidUI global API provides access to all library functionality. Here are the most commonly used functions:</p>
+        
+        <h3>Theme Management</h3>
+        <ul>
+            <li><code>VoidUI:SetTheme(themeName)</code> — Sets the active theme by name</li>
+            <li><code>VoidUI:GetTheme()</code> — Returns the current theme table</li>
+            <li><code>VoidUI:GetThemeName()</code> — Returns the current theme name</li>
+            <li><code>VoidUI:SetAccent(color)</code> — Sets the accent color</li>
+            <li><code>VoidUI:ToggleTheme()</code> — Toggles between Dark and Light</li>
+            <li><code>VoidUI:CreateTheme(name, data)</code> — Registers a custom theme</li>
+            <li><code>VoidUI:ListThemes()</code> — Lists all available themes</li>
+        </ul>
+
+        <h3>Window Management</h3>
+        <ul>
+            <li><code>VoidUI:CreateWindow(config)</code> — Creates a new window</li>
+            <li><code>VoidUI:DestroyWindow(window)</code> — Destroys a window</li>
+            <li><code>VoidUI:DestroyAll()</code> — Destroys all windows</li>
+            <li><code>VoidUI:GetWindows()</code> — Gets all windows</li>
+            <li><code>VoidUI:GetActiveWindow()</code> — Gets the active window</li>
+        </ul>
+
+        <h3>Notifications</h3>
+        <ul>
+            <li><code>VoidUI:Notify(config)</code> — Displays a notification</li>
+            <li><code>VoidUI:NotifyInfo(title, desc)</code> — Info notification</li>
+            <li><code>VoidUI:NotifySuccess(title, desc)</code> — Success notification</li>
+            <li><code>VoidUI:NotifyWarning(title, desc)</code> — Warning notification</li>
+            <li><code>VoidUI:NotifyError(title, desc)</code> — Error notification</li>
+            <li><code>VoidUI:ShowDialog(config)</code> — Shows a modal dialog</li>
+        </ul>
+
+        <h3>Animation & Blur</h3>
+        <ul>
+            <li><code>VoidUI:ToggleAnimations(enabled)</code> — Enable/disable animations</li>
+            <li><code>VoidUI:SetAnimationQuality(quality)</code> — Set animation quality</li>
+            <li><code>VoidUI:SetAnimationSpeed(speed)</code> — Set animation speed</li>
+            <li><code>VoidUI:EnableBlur() / DisableBlur()</code> — Control blur effects</li>
+            <li><code>VoidUI:SetTransparency(value)</code> — Set background transparency</li>
+        </ul>
+
+        <h3>i18n</h3>
+        <ul>
+            <li><code>VoidUI:SetLanguage(lang)</code> — Set the active language</li>
+            <li><code>VoidUI:GetLanguage()</code> — Get the current language</li>
+            <li><code>VoidUI:Translate(key)</code> — Translate a key</li>
+            <li><code>VoidUI:GetAvailableLanguages()</code> — List available languages</li>
+        </ul>
+
+        <h3>State & Plugins</h3>
+        <ul>
+            <li><code>VoidUI:Export()</code> — Export application state</li>
+            <li><code>VoidUI:Import(state)</code> — Import application state</li>
+            <li><code>VoidUI:RegisterPlugin(name, init)</code> — Register a plugin</li>
+            <li><code>VoidUI:UnregisterPlugin(name)</code> — Unregister a plugin</li>
+            <li><code>VoidUI:ListPlugins()</code> — List all plugins</li>
+        </ul>
+
+        <h2 id="components">Components</h2>
+        <p>VoidUI includes over 50 components organized into categories. Each component is created through factory methods on a Section object or via the standalone <code>VoidUI:Create(type, config)</code> function.</p>
+
+        <h3>Creating Components</h3>
+        <p>Components are typically created within a section using factory methods:</p>
+        <pre><code>Section:CreateButton({ Text = "Click Me", Callback = function() end })
+Section:CreateToggle({ Text = "Enable", Default = true, Callback = function(v) end })
+Section:CreateSlider({ Text = "Volume", Min = 0, Max = 100, Default = 50 })
+Section:CreateDropdown({ Text = "Theme", Options = VoidUI:ListThemes() })</code></pre>
+
+        <h3>Component Signals</h3>
+        <p>Every component emits signals that you can connect to for more control:</p>
+        <pre><code>local button = Section:CreateButton({ Text = "Save" })
+button.OnClick:Connect(function()
+    print("Button clicked!")
+end)</code></pre>
+
+        <h2 id="themes">Themes</h2>
+        <p>VoidUI ships with six built-in themes: Dark, Light, Midnight, Sunset, Forest, and Cyber. You can switch themes at any time, create custom themes, and customize the accent color independently.</p>
+        <pre><code>-- Switch theme
+VoidUI:SetTheme("Midnight")
+
+-- Set custom accent
+VoidUI:SetAccent(Color3.fromRGB(255, 100, 150))
+
+-- Create a custom theme
+VoidUI:CreateTheme("Ocean", {
+    Background = Color3.fromRGB(12, 28, 48),
+    Text = Color3.fromRGB(210, 230, 250),
+    Accent = Color3.fromRGB(0, 160, 220),
+})
+VoidUI:SetTheme("Ocean")</code></pre>
+
+        <h2 id="events">Events & Callbacks</h2>
+        <p>VoidUI uses a signal-based event system. Signals can be connected with <code>:Connect(callback)</code>, which returns a connection object. You can disconnect using <code>:Disconnect()</code>.</p>
+        <pre><code>local Core = VoidUI:GetCore()
+local Signal = Core.Signal
+
+local mySignal = Signal.new()
+local conn = mySignal:Connect(function(value)
+    print("Received:", value)
+end)
+mySignal:Fire("Hello!")  -- prints: Received: Hello!
+conn:Disconnect()</code></pre>
+        <p>The library also includes a Promise implementation for asynchronous operations:</p>
+        <pre><code>local Promise = VoidUI:GetCore().Promise
+
+Promise.new(function(resolve, reject)
+    if success then resolve(result) else reject(err) end
+end)
+:Then(function(result) print("Success:", result) end)
+:Catch(function(err) print("Error:", err) end)</code></pre>
+
+        <h2 id="i18n">Internationalization</h2>
+        <p>VoidUI supports English (en-US), Portuguese (pt-BR), and Spanish (es-ES) out of the box. You can change the language at any time and add custom translations.</p>
+        <pre><code>VoidUI:SetLanguage("pt-BR")
+print(VoidUI:Translate("save_button"))
+
+-- Add custom translations
+local i18n = VoidUI:GetI18n()
+i18n.AddTranslations({
+    ["en-US"] = { app_title = "My App" },
+    ["pt-BR"] = { app_title = "Meu App" },
+})</code></pre>
+
+        <h2 id="plugins">Plugins & Extensions</h2>
+        <p>The plugin system allows third-party extensions to register custom components, themes, and hooks:</p>
+        <pre><code>VoidUI:RegisterPlugin("MyPlugin", function(api)
+    api.RegisterComponent("MyWidget", function(config)
+        return { Value = config.Default or 0 }
+    end)
+    api.On("ThemeChanged", function(name)
+        api.Log("Theme: " .. name)
+    end)
+end)</code></pre>
+
+        <h2 id="best-practices">Best Practices</h2>
+        <p>Group related components together in sections for better organization. Use the <code>Callback</code> parameter for simple event handling and direct signal connections only when you need multiple listeners. Always disconnect connections you create and destroy components when they are no longer needed. Use the Export/Import system to persist user preferences between sessions.</p>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+        <p>If components are not showing, ensure you have created a window, tab, and section in the correct order. If themes are not applying, verify the theme was registered before setting it. For performance issues, try disabling animations with <code>VoidUI:ToggleAnimations(false)</code> or reducing the animation quality.</p>
+
+        <h2 id="migration">Migration Guide</h2>
+        <p>Migrating from other UI libraries to VoidUI is straightforward. The window/tab/section pattern is similar across libraries. The main differences are in naming (VoidUI uses <code>Text</code> instead of <code>Title</code> for component labels) and the additional features VoidUI provides. See the full migration guide in the documentation for detailed mappings.</p>
+
+        <h2 id="changelog">Changelog</h2>
+        <p>Version 1.0.0 is the initial release of VoidUI, including all 50+ components, six themes, the plugin system, i18n support, and the complete global API. See the <a href="changelog.html">Changelog page</a> for full details.</p>
+
+        <h2 id="license">License</h2>
+        <p>VoidUI is released under the MIT License, which means it is free to use, modify, and distribute for both personal and commercial projects. The library was created by the NinjaTech AI Team.</p>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-bottom">
+            <p>© 2026 NinjaTech AI Team. VoidUI is released under the MIT License.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
